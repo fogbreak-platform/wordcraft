@@ -415,7 +415,7 @@ fn wasm_main() {
         let canvas_for_boot = canvas.clone();
         let result = eframe::WebRunner::new()
             .start(
-                canvas,
+                canvas.clone(),
                 options,
                 Box::new(move |cc| {
                     Ok(Box::new(build_shell(
