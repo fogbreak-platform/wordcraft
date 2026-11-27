@@ -13,7 +13,7 @@ pub(crate) mod doc_state;
 pub mod file_access;
 pub(crate) mod ime;
 pub mod io;
-mod io_ext;
+pub mod io_ext;
 pub mod keymap;
 pub(crate) mod locale;
 pub mod math_gallery;

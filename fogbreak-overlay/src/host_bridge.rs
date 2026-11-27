@@ -147,11 +147,11 @@ pub fn emit_failed(canvas: &HtmlCanvasElement, error: &str) {
     dispatch_event(canvas, "failed", &detail);
 }
 
-pub fn dirty_reporter(canvas: HtmlCanvasElement) -> Box<dyn FnMut(bool)> {
-    let mut last = false;
+pub fn dirty_reporter(canvas: HtmlCanvasElement) -> Box<dyn Fn(bool)> {
+    let last = std::cell::Cell::new(false);
     Box::new(move |dirty: bool| {
-        if dirty != last {
-            last = dirty;
+        if dirty != last.get() {
+            last.set(dirty);
             let detail = js_from_json(&json!({ "dirty": dirty }));
             dispatch_event(&canvas, "dirty", &detail);
         }

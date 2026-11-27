@@ -263,7 +263,7 @@ fn wasm_main() {
             self.handle_actions(ctx);
             self.app.logic(ctx);
             let dark = *self.dark_state.lock().unwrap_or_else(|e| e.into_inner());
-            if ctx.style().visuals.dark_mode != dark {
+            if ctx.global_style().visuals.dark_mode != dark {
                 theme::apply_palette(ctx, dark);
             }
             self.settings.lock().tick(web_time::Instant::now());
@@ -300,7 +300,7 @@ fn wasm_main() {
         SharedSettings::new(store)
     }
 
-    fn finish_boot(document: &web_sys::Document, canvas: &HtmlCanvasElement, result: Result<(), eframe::Error>) {
+    fn finish_boot(document: &web_sys::Document, canvas: &HtmlCanvasElement, result: Result<(), wasm_bindgen::JsValue>) {
         if let Some(el) = document.get_element_by_id(LOADING_ID) {
             match &result {
                 Ok(()) => el.remove(),
