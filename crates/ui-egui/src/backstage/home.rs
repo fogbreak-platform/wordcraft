@@ -109,9 +109,9 @@ pub(super) fn open(ui: &mut Ui, app: &mut WordApp) {
     // doesn't show up, WordCraft's own browser is always one click away.
     #[cfg(all(unix, not(target_os = "macos"), not(target_arch = "wasm32")))]
     if clicked(
-        &Button::new(label("Browse in WordCraft…"))
+        &Button::new(label("Browse in Fogbreak Word…"))
             .id_salt("open-browse-own")
-            .tooltip(tl!("Open a file with WordCraft's own browser when the system file dialog doesn't appear.").to_owned())
+            .tooltip(tl!("Open a file with Fogbreak Word's own browser when the system file dialog doesn't appear.").to_owned())
             .show(ui),
     ) {
         let _ = app.run("ui.fileBrowser", json!({}));

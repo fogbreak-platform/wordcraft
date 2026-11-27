@@ -455,7 +455,7 @@ pub fn export_formats(app: &mut WordApp, ui: &mut Ui) {
     // Linux and the BSDs (#3535): WordCraft's own browser when the system dialog doesn't appear.
     #[cfg(all(unix, not(target_os = "macos"), not(target_arch = "wasm32")))]
     {
-        if clicked(&Button::new(tl!("Browse in WordCraft…")).id_salt("browse").sizing(Sizing::FillWidth).align(HAlign::Start).show(ui)) {
+        if clicked(&Button::new(tl!("Browse in Fogbreak Word…")).id_salt("browse").sizing(Sizing::FillWidth).align(HAlign::Start).show(ui)) {
             let _ = app.run("ui.fileBrowser", json!({"purpose": "export"}));
         }
     }

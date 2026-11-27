@@ -2023,8 +2023,7 @@ fn title_and_account_buttons_work() {
         (Role::Button, "Undo History"),
         (Role::Button, "Customize Quick Access Toolbar"),
         (Role::Button, "Document1 \u{2014} Not saved"),
-        (Role::Button, "Discord"),
-        (Role::Button, "WordCraft User"),
+        (Role::Button, "Fogbreak User"),
     ] {
         assert!(h.query_by_role_and_label(role, label).is_some(), "title bar missing {role:?} {label:?}");
     }
@@ -2072,7 +2071,7 @@ fn title_and_account_buttons_work() {
     assert!(h.state().dialog_host.open_dialogs().is_empty());
     assert_eq!(h.state().title_stem(), long_name.trim());
 
-    h.get_by_role_and_label(Role::Button, "WordCraft User").click();
+    h.get_by_role_and_label(Role::Button, "Fogbreak User").click();
     h.run_steps(2);
     assert!(h.state().ui.backstage);
     assert_eq!(h.state().ui.backstage_page, "options");
@@ -2194,7 +2193,7 @@ fn programmatic_calls_cannot_change_the_default_apps() {
 #[test]
 fn the_default_app_button_shows_only_with_the_hosts_hook() {
     use egui_kittest::kittest::Queryable;
-    const LABEL: &str = "Make WordCraft the default for Word documents…";
+    const LABEL: &str = "Make Fogbreak Word the default for Word documents…";
     for hook in [false, true] {
         let calls = std::rc::Rc::new(std::cell::Cell::new(0));
         let mut a = app();

@@ -80,7 +80,7 @@ struct WordcraftTools {
 impl Tools for WordcraftTools {
     fn instructions(&self) -> String {
         format!(
-            "{INSTRUCTIONS} Backend: {}. Community: https://discord.gg/artcraft · https://getartcraft.com/apps/wordcraft · https://github.com/storytold/wordcraft",
+            "{INSTRUCTIONS} Backend: {}. https://fogbreak.io · https://github.com/fogbreak-platform/wordcraft",
             self.backend.describe()
         )
     }
@@ -124,9 +124,9 @@ pub struct Server {
 
 impl Server {
     pub fn new(backend: Box<dyn Backend>) -> Self {
-        let info = Info { name: "wordcraft", title: "WordCraft", version: env!("CARGO_PKG_VERSION"), max_line: MAX_REQUEST_LINE };
+        let info = Info { name: "wordcraft", title: "Fogbreak Word", version: env!("CARGO_PKG_VERSION"), max_line: MAX_REQUEST_LINE };
         let options = Options {
-            website_url: Some("https://getartcraft.com/apps/wordcraft".into()),
+            website_url: Some("https://fogbreak.io".into()),
             // Clients read every tool failure from the result, as before the shared core.
             tool_errors_as_results: true,
             strict_request_ids: true,

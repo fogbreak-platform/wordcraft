@@ -178,7 +178,7 @@ impl Strings {
         let proofing_language = if crate::ribbon::caret_no_proof(app) {
             tl!("The text at the insertion point is marked Do not check spelling or grammar.").to_string()
         } else if !crate::ribbon::caret_language_proofed(app) {
-            crate::i18n::fmt(tl!("{language}: WordCraft doesn't check spelling or grammar in this language yet."), &[("language", &lang)])
+            crate::i18n::fmt(tl!("{language}: Fogbreak Word doesn't check spelling or grammar in this language yet."), &[("language", &lang)])
         } else {
             let unreadable = crate::ribbon::caret_unreadable_dictionary(app);
             crate::chrome::dictionary_problem(&lang, &unreadable, crate::ribbon::caret_missing_dictionary(app))
@@ -344,13 +344,13 @@ impl PreferencesModel for OptionsModel<'_> {
                             tl!("Tell me when a document's missing fonts can be downloaded"),
                             app.ui.font_download_notice,
                         ),
-                        custom("general.defaultApp", tl!("Make WordCraft the default for Word documents…")).visible(can_default),
+                        custom("general.defaultApp", tl!("Make Fogbreak Word the default for Word documents…")).visible(can_default),
                     ],
                 ),
                 GroupSpec::new(
                     Some(tl!("Start-up")),
-                    vec![b("general.startScreen", tl!("Show the Start screen when WordCraft starts"), app.ui.start_screen).help(tl!(
-                        "On: WordCraft opens on File › Home, with a blank document, the templates and your recent documents. Off: it opens a blank document."
+                    vec![b("general.startScreen", tl!("Show the Start screen when Fogbreak Word starts"), app.ui.start_screen).help(tl!(
+                        "On: Fogbreak Word opens on File › Home, with a blank document, the templates and your recent documents. Off: it opens a blank document."
                     ))],
                 ),
                 GroupSpec::new(
@@ -444,7 +444,7 @@ impl PreferencesModel for OptionsModel<'_> {
             vec![
                 GroupSpec::new(Some(tl!("Save documents")), {
                     // The browser can't write to the user's files, so AutoSave can't be turned on there (#176).
-                    let row = b("save.autosave", tl!("AutoSave documents you have saved in WordCraft"), app.autosave && !browser).enabled(!browser);
+                    let row = b("save.autosave", tl!("AutoSave documents you have saved in Fogbreak Word"), app.autosave && !browser).enabled(!browser);
                     vec![if browser { row.help(&s.autosave_reason) } else { row }]
                 }),
                 // The open document's `file.privacyOptions` (#1062): saved with it, honoured when it is saved.
@@ -577,7 +577,7 @@ impl PreferencesModel for OptionsModel<'_> {
                         tl!("Display server:"),
                         RowKind::choice(app.ui.display_server.code(), entries(DisplayServer::ALL.iter().map(|d| (d.code(), name(d))))),
                     )
-                    .help(tl!("Applies the next time WordCraft starts.")),
+                    .help(tl!("Applies the next time Fogbreak Word starts.")),
                 ],
             ));
         }
@@ -870,25 +870,25 @@ fn language_name(lang: wordcraft_engine::proof::ProofLang) -> &'static str {
     }
 }
 
-/// File ▸ Options ▸ General: make WordCraft the default app for Word documents (#295). Only where
+/// File ▸ Options ▸ General: make Fogbreak Word the default app for Word documents (#295). Only where
 /// the host can (`Services::make_default_app`: Windows opens Default apps, Linux and BSD use
 /// `xdg-mime`); macOS shows how to do it in Finder, the web shows nothing.
 #[cfg(not(target_arch = "wasm32"))]
 fn default_app_row(app: &mut WordApp, ui: &mut Ui) -> bool {
     if app.services.make_default_app.is_some() {
         let hint = if cfg!(target_os = "windows") {
-            tl!("Opens Settings › Default apps, where you choose WordCraft for .docx and the other document types.")
+            tl!("Opens Settings › Default apps, where you choose Fogbreak Word for .docx and the other document types.")
         } else {
-            tl!("Opens .docx, .doc, .rtf and .odt files and Word templates with WordCraft from now on.")
+            tl!("Opens .docx, .doc, .rtf and .odt files and Word templates with Fogbreak Word from now on.")
         };
-        let clicked = Button::new(tl!("Make WordCraft the default for Word documents…")).tooltip(hint).show(ui).clicked();
+        let clicked = Button::new(tl!("Make Fogbreak Word the default for Word documents…")).tooltip(hint).show(ui).clicked();
         // Only a person's click changes system defaults: an automation client's pass does not.
         if clicked && !WindowHost::of(ui.ctx()).injected_pass() {
             let _ = app.make_default_app();
             return true;
         }
     } else if cfg!(target_os = "macos") {
-        Text::new(tl!("To open Word documents with WordCraft by default: select one in Finder, choose File › Get Info, pick WordCraft under Open with, then click Change All."))
+        Text::new(tl!("To open Word documents with Fogbreak Word by default: select one in Finder, choose File › Get Info, pick Fogbreak Word under Open with, then click Change All."))
             .role(TypeRole::Caption)
             .shade(Shade::Faint)
             .show(ui);

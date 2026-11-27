@@ -1,6 +1,6 @@
 [workspace]
 resolver = "3"
-members = ["crates/*", "apps/*", "xtask"]
+members = ["crates/*", "apps/*", "fogbreak-overlay", "xtask"]
 default-members = ["crates/*", "apps/wordcraft", "apps/wordcraft-cli", "xtask"]
 
 [workspace.metadata.cl]
@@ -17,7 +17,7 @@ version = "0.18.1"
 edition = "2024"
 license = "MIT OR Apache-2.0"
 rust-version = "1.95"
-repository = "https://github.com/storytold/wordcraft"
+repository = "https://github.com/fogbreak-platform/wordcraft"
 
 [workspace.dependencies]
 # internal

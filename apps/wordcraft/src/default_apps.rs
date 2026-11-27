@@ -44,7 +44,7 @@ const WORD_MIME_TYPES: &[&str] = &[
 #[cfg(any(unix, windows, test))]
 pub fn identity() -> AppIdentity {
     AppIdentity {
-        registered_name: "WordCraft".to_string(),
+        registered_name: "Fogbreak Word".to_string(),
         desktop_id: DESKTOP_ID.to_string(),
         mime_types: WORD_MIME_TYPES.iter().map(|t| (*t).to_string()).collect(),
     }
@@ -59,7 +59,7 @@ mod tests {
     fn xdg_mime_sets_every_word_type_in_one_call() {
         let id = identity();
         assert_eq!(id.desktop_id, "ai.storyteller.wordcraft.desktop");
-        assert_eq!(id.registered_name, "WordCraft");
+        assert_eq!(id.registered_name, "Fogbreak Word");
         for t in [
             "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
             "application/msword",

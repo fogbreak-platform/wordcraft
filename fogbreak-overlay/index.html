@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, viewport-fit=cover">
+  <title>Fogbreak Word</title>
+  <link data-trunk rel="rust" href="Cargo.toml" data-bin="fogbreak-word" data-wasm-opt="z" data-weak-refs />
+  <style>
+    :root {
+      color-scheme: light dark;
+      --fb-bg: #F7FAFC;
+      --fb-surface: #FFFFFF;
+      --fb-text: #111821;
+      --fb-text-muted: #4A5568;
+      --fb-border: #D9E2EC;
+      --fb-accent: #087F9C;
+    }
+    html[data-theme="dark"] {
+      --fb-bg: #111821;
+      --fb-surface: #1A2431;
+      --fb-text: #F7FAFC;
+      --fb-text-muted: #9FB0C2;
+      --fb-border: #2B394A;
+      --fb-accent: #14B8C4;
+    }
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      overscroll-behavior: none;
+      background: var(--fb-bg);
+      color: var(--fb-text);
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+    #fogbreak_canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+      touch-action: none;
+      background: var(--fb-bg);
+    }
+    #fogbreak_loading {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: var(--fb-bg);
+      color: var(--fb-text-muted);
+      font: 14px system-ui, -apple-system, sans-serif;
+      pointer-events: none;
+    }
+  </style>
+  <script>
+    (function () {
+      var params = new URLSearchParams(window.location.search);
+      var q = params.get("theme");
+      var dark = q === "dark" ? true : q === "light" ? false : window.matchMedia("(prefers-color-scheme: dark)").matches;
+      document.documentElement.dataset.theme = dark ? "dark" : "light";
+    })();
+  </script>
+</head>
+<body>
+  <canvas id="fogbreak_canvas" data-host="page" data-engine="fogbreak-word" data-rpc-key="fogbreakWordHost" data-iframe="false"></canvas>
+  <div id="fogbreak_loading">Loading Fogbreak Word&hellip;</div>
+</body>
+</html>

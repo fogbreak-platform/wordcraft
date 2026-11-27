@@ -43,8 +43,8 @@ pub fn app_id() -> &'static str {
 
 pub const fn name_for(identity: LaunchIdentity) -> &'static str {
     match identity {
-        LaunchIdentity::Stable => "WordCraft",
-        LaunchIdentity::NightlyV1 => "WordCraft Nightly",
+        LaunchIdentity::Stable => "Fogbreak Word",
+        LaunchIdentity::NightlyV1 => "Fogbreak Word Nightly",
     }
 }
 
@@ -69,7 +69,7 @@ mod tests {
 
     #[test]
     fn the_channel_names_are_distinct_and_keep_the_stable_name() {
-        assert_eq!(name_for(LaunchIdentity::Stable), "WordCraft");
-        assert_eq!(name_for(LaunchIdentity::NightlyV1), "WordCraft Nightly");
+        assert_eq!(name_for(LaunchIdentity::Stable), "Fogbreak Word");
+        assert_eq!(name_for(LaunchIdentity::NightlyV1), "Fogbreak Word Nightly");
     }
 }

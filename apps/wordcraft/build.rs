@@ -26,8 +26,6 @@ fn main() {
             std::process::exit(1);
         }
     };
-    println!("cargo:rerun-if-changed=../../assets/app-icon/wordcraft.ico");
-    println!("cargo:rerun-if-changed=../../assets/app-icon/wordcraft-nightly.ico");
     println!("cargo:rerun-if-env-changed=WORDCRAFT_REQUIRE_WINRES");
     println!("cargo:rerun-if-env-changed=WORDCRAFT_VERSION");
     let built_version = if nightly {
@@ -47,11 +45,14 @@ fn main() {
         return;
     }
     let mut res = winresource::WindowsResource::new();
-    res.set_icon(build_channel::windows_icon_path(nightly))
-        .set("ProductName", if nightly { "WordCraft Nightly" } else { "WordCraft" })
-        .set("FileDescription", if nightly { "WordCraft Nightly word processor" } else { "WordCraft word processor" })
-        .set("CompanyName", "Learning Machines LLC")
-        .set("LegalCopyright", "Copyright (c) the WordCraft authors. MIT OR Apache-2.0.")
+    let ico = build_channel::windows_icon_path(nightly);
+    if std::path::Path::new(ico).exists() {
+        res.set_icon(ico);
+    }
+    res.set("ProductName", if nightly { "Fogbreak Word Nightly" } else { "Fogbreak Word" })
+        .set("FileDescription", if nightly { "Fogbreak Word Nightly word processor" } else { "Fogbreak Word word processor" })
+        .set("CompanyName", "Fogbreak")
+        .set("LegalCopyright", "Copyright (c) the Fogbreak contributors. MIT OR Apache-2.0.")
         .set("OriginalFilename", "wordcraft.exe")
         .set("InternalName", "wordcraft");
     if nightly {

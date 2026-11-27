@@ -9,14 +9,14 @@
 /// prompt shows both, and an AppImage's menu entry gets the icon.
 #[cfg(not(target_arch = "wasm32"))]
 pub const UPDATE_APP: craft::update::app::App = craft::update::app::App {
-    icon_png: Some(include_bytes!("../../../assets/app-icon/hicolor/128x128/apps/ai.storyteller.wordcraft.png")),
-    accent: Some([0x3f, 0x5f, 0xe0]),
+    icon_png: None,
+    accent: Some([0x08, 0x7f, 0x9c]),
     ..craft::update::suite::WORDCRAFT
 };
 
-/// WordCraft as the host and the theme pins know it. [`UPDATE_APP`] stays beside it: the updater
+/// Fogbreak Word as the host and the theme pins know it. [`UPDATE_APP`] stays beside it: the updater
 /// takes that type, which carries the icon and accent this one has no place for.
-pub const APP: craft::host::AppInfo = craft::host::AppInfo { id: "wordcraft", name: "WordCraft", version: env!("CARGO_PKG_VERSION") };
+pub const APP: craft::host::AppInfo = craft::host::AppInfo { id: "fogbreak-word", name: "Fogbreak Word", version: env!("CARGO_PKG_VERSION") };
 
 /// An English UI string in the current interface language ([`i18n::t`]).
 #[macro_export]

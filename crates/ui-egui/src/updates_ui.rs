@@ -95,7 +95,7 @@ impl WordApp {
 /// for Updates shows.
 #[cfg(not(target_arch = "wasm32"))]
 fn refused_check() -> craft::update::updater::CheckSource {
-    let why = tl!("Updates are off in this window: WordCraft was started with another program's AppImage settings. Start WordCraft from its own menu entry to update it.")
+    let why = tl!("Updates are off in this window: Fogbreak Word was started with another program's AppImage settings. Start Fogbreak Word from its own menu entry to update it.")
         .to_string();
     std::sync::Arc::new(move || Err(why.clone().into()))
 }
@@ -103,7 +103,7 @@ fn refused_check() -> craft::update::updater::CheckSource {
 /// A check whose only answer is that the Launcher owns this build's updates.
 #[cfg(not(target_arch = "wasm32"))]
 fn launcher_check() -> craft::update::updater::CheckSource {
-    let why = "Updates for WordCraft Nightly are managed by ArtCraft Launcher. Open ArtCraft Launcher to update it.".to_string();
+    let why = "Updates for Fogbreak Word Nightly are managed by the desktop launcher. Open the desktop launcher to update it.".to_string();
     std::sync::Arc::new(move || Err(why.clone().into()))
 }
 
@@ -295,6 +295,6 @@ mod launcher_updates {
     #[test]
     fn a_nightly_check_never_reaches_the_network_and_names_the_launcher() {
         let error = super::launcher_check()().unwrap_err();
-        assert!(error.to_string().contains("ArtCraft Launcher"), "{error}");
+        assert!(error.to_string().contains("desktop launcher"), "{error}");
     }
 }

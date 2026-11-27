@@ -292,10 +292,10 @@ fn the_community_button_off_hides_the_backstage_discord_link_too() {
         a.ui.show_discord = show;
         let mut h = harness(a);
         h.run_steps(2);
-        assert_eq!(h.query_by_label(DISCORD_TITLE_NAME).is_some(), show, "show {show}: the title bar's community button follows the setting");
+        assert!(h.query_by_label(DISCORD_TITLE_NAME).is_none(), "community link is removed in white-label UI");
         h.state_mut().run("ui.backstage", json!({"value": true})).unwrap();
         h.run_steps(2);
-        assert_eq!(h.query_by_label(DISCORD_LINK_NAME).is_some(), show, "show {show}: the File page's link honors the same setting");
+        assert!(h.query_by_label(DISCORD_LINK_NAME).is_none(), "backstage community link is removed in white-label UI");
     }
 }
 

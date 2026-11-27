@@ -1,0 +1,8 @@
+[build]
+target = "index.html"
+dist = "../dist/fogbreak-web"
+public_url = "./"
+filehash = true
+
+[serve]
+addresses = ["127.0.0.1"]

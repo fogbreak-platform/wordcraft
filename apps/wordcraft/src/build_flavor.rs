@@ -12,8 +12,8 @@ pub const COMPILED: BuildFlavor = if cfg!(wordcraft_nightly_v1) { BuildFlavor::N
 
 pub fn require_profile(flavor: BuildFlavor, profile: &Profile) -> Result<(), String> {
     match (flavor, profile.is_nightly()) {
-        (BuildFlavor::NightlyV1, false) => Err("Open WordCraft Nightly from ArtCraft Launcher".into()),
-        (BuildFlavor::Stable, true) => Err("This is a stable WordCraft build; nightly-v1 requires the nightly build".into()),
+        (BuildFlavor::NightlyV1, false) => Err("Open Fogbreak Word Nightly from the desktop launcher".into()),
+        (BuildFlavor::Stable, true) => Err("This is a stable Fogbreak Word build; nightly-v1 requires the nightly build".into()),
         _ => Ok(()),
     }
 }
@@ -22,11 +22,11 @@ pub fn needs_native_error(flavor: BuildFlavor, desktop_session: bool) -> bool {
     desktop_session && flavor == BuildFlavor::NightlyV1
 }
 
-/// The Launcher's version line: `WordCraft <version> (nightly-v1)` for a nightly build.
+/// The Launcher's version line: `Fogbreak Word <version> (nightly-v1)` for a nightly build.
 pub fn version(flavor: BuildFlavor, stable: &str) -> String {
     match flavor {
         BuildFlavor::Stable => stable.to_owned(),
-        BuildFlavor::NightlyV1 => format!("WordCraft {stable} (nightly-v1)"),
+        BuildFlavor::NightlyV1 => format!("Fogbreak Word {stable} (nightly-v1)"),
     }
 }
 
@@ -50,7 +50,7 @@ mod tests {
     fn nightly_build_without_a_profile_is_refused_before_startup() {
         let started = std::cell::Cell::new(false);
         let result = require_profile(BuildFlavor::NightlyV1, &Profile::Stable).map(|()| started.set(true));
-        assert!(result.unwrap_err().contains("ArtCraft Launcher"));
+        assert!(result.unwrap_err().contains("desktop launcher"));
         assert!(!started.get());
     }
     #[test]
@@ -63,7 +63,7 @@ mod tests {
     #[test]
     fn nightly_version_query_is_unambiguous_and_never_reinterprets_file_arguments() {
         assert_eq!(version(BuildFlavor::Stable, "0.18.1"), "0.18.1");
-        assert_eq!(version(BuildFlavor::NightlyV1, "0.18.1"), "WordCraft 0.18.1 (nightly-v1)");
+        assert_eq!(version(BuildFlavor::NightlyV1, "0.18.1"), "Fogbreak Word 0.18.1 (nightly-v1)");
         assert!(version_query(&["--version".into()]));
         assert!(version_query(&["-V".into()]));
         assert!(!version_query(&["--".into(), "--version".into()]));

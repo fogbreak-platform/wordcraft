@@ -552,7 +552,7 @@ fn save_as_saves_in_wordcraft_when_the_system_dialog_never_shows() {
     a.run("text.insert", json!({"text": "Saved past a silent portal"})).unwrap();
     let mut h = file_page(a, "saveAs");
     assert!(files.requests().is_empty(), "nothing is asked until a button is pressed");
-    h.get_by_label("Browse in WordCraft…").click();
+    h.get_by_label("Browse in Fogbreak Word…").click();
     h.run_steps(6);
     let asked = files.requests();
     assert_eq!(asked.len(), 1, "one pick: {asked:?}");
@@ -573,7 +573,7 @@ fn save_as_saves_in_wordcraft_when_the_system_dialog_never_shows() {
 fn export_page_offers_wordcrafts_own_browser() {
     let files = Arc::new(ScriptedFiles::new());
     let mut h = file_page(app_with_files(&files), "export");
-    h.get_by_label("Browse in WordCraft…").click();
+    h.get_by_label("Browse in Fogbreak Word…").click();
     h.run_steps(4);
     let asked = files.requests();
     let request = asked.last().expect("the button asked the file service");
@@ -741,8 +741,6 @@ fn about_stays_at_the_bottom_of_a_side_menu_that_fits() {
     assert!(about.max.y <= 900.0, "About is inside the window: {about:?}");
     // The menu is as tall as the window, so its footer is at the window's foot, not under Options.
     assert!(about.max.y > 820.0, "About is at the foot of the window: {about:?}");
-    let discord = h.get_by_label("Discord community").rect();
-    assert!(discord.max.y <= about.min.y + 1.0, "the community link is above About: {discord:?} {about:?}");
     assert!((about.min.x - options.min.x).abs() < 1.0 && about.width() > 80.0, "About spans the menu: {about:?}");
     assert!((about.min.x - options.min.x).abs() < 1.0, "in the same column: {about:?} {options:?}");
 }

@@ -81,7 +81,7 @@ fn about_text(identity: crate::os_window::LaunchIdentity, commit: Option<&str>) 
             let commit = commit.filter(|value| !value.is_empty()).unwrap_or("unavailable");
             (
                 crate::os_window::name_for(identity).to_string(),
-                "A free, open-source word processor written from scratch in Rust.\nPart of the Crafting Apps from the ArtCraft team.".to_string(),
+                "A free, open-source word processor written from scratch in Rust.\nPart of Fogbreak.".to_string(),
                 format!("{version}\nCommit: {commit}"),
             )
         }
@@ -90,8 +90,8 @@ fn about_text(identity: crate::os_window::LaunchIdentity, commit: Option<&str>) 
             // The dialog's own "Version {version}" words the line, so this is the number and the build only.
             let version = crate::i18n::fmt(tl!("{version} ({build})"), &[("version", env!("CARGO_PKG_VERSION")), ("build", build)]);
             (
-                tl!("WordCraft").to_string(),
-                tl!("A free, open-source word processor written from scratch in Rust.\nPart of the Crafting Apps from the ArtCraft team.")
+                tl!("Fogbreak Word").to_string(),
+                tl!("A free, open-source word processor written from scratch in Rust.\nPart of Fogbreak.")
                     .to_string(),
                 version.to_string(),
             )
@@ -104,21 +104,19 @@ fn about_info_for(identity: crate::os_window::LaunchIdentity, commit: Option<&st
     if identity == crate::os_window::LaunchIdentity::NightlyV1 {
         return AboutInfo::new(name, blurb, version)
             .links([
-                AboutLink::new("getartcraft.com/apps/wordcraft".to_string(), "https://getartcraft.com/apps/wordcraft"),
-                AboutLink::new("Join us on Discord: discord.gg/artcraft".to_string(), "https://discord.gg/artcraft"),
-                AboutLink::new("Source code: github.com/storytold/wordcraft".to_string(), "https://github.com/storytold/wordcraft"),
+                AboutLink::new("fogbreak.io".to_string(), "https://fogbreak.io"),
+                AboutLink::new("Source code: github.com/fogbreak-platform/wordcraft".to_string(), "https://github.com/fogbreak-platform/wordcraft"),
                 // Opens only after a click; nothing is collected or sent automatically.
-                AboutLink::new("Report a problem".to_string(), "https://github.com/storytold/wordcraft/issues"),
+                AboutLink::new("Report a problem".to_string(), "https://github.com/fogbreak-platform/wordcraft/issues"),
             ])
-            .built_with("MIT OR Apache-2.0. Copyright (c) 2026 ArtCraft Team and the WordCraft contributors.".to_string());
+            .built_with("MIT OR Apache-2.0. Fogbreak Word.".to_string());
     }
     AboutInfo::new(name, blurb, version)
         .links([
-            AboutLink::new(tl!("getartcraft.com/apps/wordcraft").to_string(), "https://getartcraft.com/apps/wordcraft"),
-            AboutLink::new(tl!("Join us on Discord: discord.gg/artcraft").to_string(), "https://discord.gg/artcraft"),
-            AboutLink::new(tl!("Source code: github.com/storytold/wordcraft").to_string(), "https://github.com/storytold/wordcraft"),
+            AboutLink::new(tl!("fogbreak.io").to_string(), "https://fogbreak.io"),
+            AboutLink::new(tl!("Source code: github.com/fogbreak-platform/wordcraft").to_string(), "https://github.com/fogbreak-platform/wordcraft"),
         ])
-        .built_with(tl!("MIT OR Apache-2.0. Copyright (c) 2026 ArtCraft Team and the WordCraft contributors.").to_string())
+        .built_with(tl!("MIT OR Apache-2.0. Fogbreak Word.").to_string())
 }
 
 /// The About dialog opened on `tab`, with the Language data tab after Models (`AboutTab::App(0)`). The name
@@ -139,7 +137,7 @@ mod nightly_about_tests {
     #[test]
     fn nightly_about_names_the_channel_and_keeps_the_full_version_and_commit() {
         let (name, blurb, version) = super::about_text(LaunchIdentity::NightlyV1, Some(COMMIT));
-        assert_eq!(name, "WordCraft Nightly");
+        assert_eq!(name, "Fogbreak Word Nightly");
         assert!(blurb.contains("word processor"));
         let package = option_env!("WORDCRAFT_VERSION").unwrap_or(env!("CARGO_PKG_VERSION"));
         assert_eq!(version, format!("{package}\nCommit: {COMMIT}"));
@@ -156,11 +154,11 @@ mod nightly_about_tests {
     #[test]
     fn only_the_nightly_about_offers_the_report_link_and_the_stable_name_is_unchanged() {
         let nightly = super::about_info_for(LaunchIdentity::NightlyV1, Some(COMMIT));
-        assert!(nightly.links.iter().any(|link| link.url == "https://github.com/storytold/wordcraft/issues"));
+        assert!(nightly.links.iter().any(|link| link.url == "https://github.com/fogbreak-platform/wordcraft/issues"));
         let stable = super::about_info_for(LaunchIdentity::Stable, Some(COMMIT));
-        assert!(!stable.links.iter().any(|link| link.url == "https://github.com/storytold/wordcraft/issues"));
+        assert!(!stable.links.iter().any(|link| link.url == "https://github.com/fogbreak-platform/wordcraft/issues"));
         let (name, _, _) = super::about_text(LaunchIdentity::Stable, Some(COMMIT));
-        assert_eq!(name, "WordCraft");
+        assert_eq!(name, "Fogbreak Word");
     }
 }
 

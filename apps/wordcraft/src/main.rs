@@ -241,17 +241,13 @@ fn decode_png(bytes: &[u8]) -> Option<ClipboardImage> {
     Some(ClipboardImage { width: rgba.width(), height: rgba.height(), rgba: rgba.into_raw() })
 }
 
-/// Window, Dock and taskbar icon.
+/// Window, Dock and taskbar icon (brand icons stripped in white-label builds).
 fn app_icon() -> Option<egui::IconData> {
-    #[cfg(target_os = "macos")]
-    let png: &[u8] = include_bytes!("../../../assets/app-icon/wordcraft-macos-512.png");
-    #[cfg(not(target_os = "macos"))]
-    let png: &[u8] = include_bytes!("../../../assets/app-icon/hicolor/256x256/apps/ai.storyteller.wordcraft.png");
-    eframe::icon_data::from_png_bytes(png).map_err(|e| log::warn!("app icon: {e}")).ok()
+    None
 }
 
 const USAGE: &str = "\
-wordcraft — the WordCraft desktop app
+wordcraft — the Fogbreak Word desktop app
 
 USAGE:
   wordcraft [--sample] [--control PORT] [--control-token TOKEN | --control-token-file PATH] [FILE…]
@@ -389,7 +385,7 @@ fn report_launch_profile_error(error: &str) {
             return;
         }
         let _ = rfd::MessageDialog::new()
-            .set_title("WordCraft Nightly")
+            .set_title("Fogbreak Word Nightly")
             .set_description(error)
             .set_level(rfd::MessageLevel::Error)
             .set_buttons(rfd::MessageButtons::Ok)
@@ -473,7 +469,7 @@ fn main() -> eframe::Result {
     // First, so the panic hook (set once, by this call; the later one only gives it the crash-log
     // folder) and every start-up warning are recorded.
     let logger = logs::install(LogNames::new("wordcraft"));
-    crash::install("WordCraft", env!("CARGO_PKG_VERSION"), None);
+    crash::install("Fogbreak Word", env!("CARGO_PKG_VERSION"), None);
     #[cfg(target_os = "linux")]
     if let Some(e) = start_over_failed {
         log::error!("couldn't start again without another program's AppImage variables, so the self-update is off in this window: {e}");
@@ -563,7 +559,7 @@ fn main() -> eframe::Result {
     // Nightly runs the Launcher's documents only: no control server, token file or automation
     // switch, and none inherited from a stable launch's environment.
     if launch_profile::current().is_nightly() && (control.port.is_some() || control.token.is_some() || control.token_file.is_some()) {
-        complain(format_args!("a WordCraft Nightly window does not start a control server; open documents through ArtCraft Launcher"));
+        complain(format_args!("a Fogbreak Word Nightly window does not start a control server; open documents through the desktop launcher"));
         std::process::exit(2);
     }
     let nightly = launch_profile::current().is_nightly();
@@ -576,8 +572,8 @@ fn main() -> eframe::Result {
         match settings_dir.as_ref().filter(|_| prefs::enabled()).map(|d| d.join("logs")) {
             Some(dir) => match logger.attach_dir(&dir) {
                 Ok(path) => {
-                    crash::install("WordCraft", env!("CARGO_PKG_VERSION"), Some(dir));
-                    log::info!("WordCraft {} ({}), log file {}", env!("CARGO_PKG_VERSION"), build_sha(), path.display());
+                    crash::install("Fogbreak Word", env!("CARGO_PKG_VERSION"), Some(dir));
+                    log::info!("Fogbreak Word {} ({}), log file {}", env!("CARGO_PKG_VERSION"), build_sha(), path.display());
                 }
                 // Standard error only by now (`attach_dir` gave up on the file).
                 Err(e) => log::warn!("no log file: {e}"),
@@ -668,7 +664,7 @@ fn main() -> eframe::Result {
         }
     };
     let session_health_warning: Option<String> = health_unavailable.then(|| {
-        "WordCraft Nightly could not record session health in its private profile. You can still edit, but abnormal-exit detection is unavailable."
+        "Fogbreak Word Nightly could not record session health in its private profile. You can still edit, but abnormal-exit detection is unavailable."
             .to_string()
     });
     let previous_nightly_unclean = nightly_record.as_ref().is_some_and(nightly_session::Session::previous_unclean);
@@ -793,7 +789,7 @@ fn main() -> eframe::Result {
             }
             if previous_nightly_unclean {
                 app.status_long(
-                    "The previous WordCraft Nightly session did not finish normally. You can report a problem from Help › About. No diagnostics have been sent.",
+                    "The previous Fogbreak Word Nightly session did not finish normally. You can report a problem from Help › About. No diagnostics have been sent.",
                 );
                 noticed_in_window.store(true, std::sync::atomic::Ordering::Relaxed);
             }

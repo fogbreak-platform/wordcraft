@@ -1,0 +1,50 @@
+[package]
+name = "fogbreak-word"
+description = "Fogbreak Word in the browser (Tidal Strata white-label overlay wrapping the full WordApp on wasm32)"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+publish = false
+
+[lints]
+workspace = true
+
+[[bin]]
+name = "fogbreak-word"
+path = "src/main.rs"
+
+[dependencies]
+wordcraft-engine = { workspace = true }
+wordcraft-ui-egui = { workspace = true }
+wordcraft-doc = { workspace = true }
+wordcraft-fonts = { workspace = true }
+craft = { workspace = true, features = ["web-api", "web-host", "platform-browser", "platform-appearance", "platform-clipboard", "automation", "print", "settings", "ui", "window"] }
+egui = { workspace = true }
+serde_json = { workspace = true }
+log = { workspace = true }
+
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+eframe = { workspace = true, features = ["default_fonts", "wgpu", "accesskit"] }
+web-time = "1.1"
+wasm-bindgen = "0.2"
+wasm-bindgen-futures = "0.4"
+js-sys = "0.3"
+web-sys = { version = "0.3", features = [
+  "Window",
+  "Document",
+  "Element",
+  "HtmlCanvasElement",
+  "HtmlElement",
+  "Location",
+  "UrlSearchParams",
+  "Event",
+  "EventTarget",
+  "CustomEvent",
+  "CustomEventInit",
+  "MediaQueryList",
+  "CssStyleDeclaration",
+  "ClipboardEvent",
+  "DataTransfer",
+  "FileList",
+  "File",
+] }
