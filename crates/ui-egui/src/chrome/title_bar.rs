@@ -7,7 +7,7 @@ use craft::keymap::CommandRef;
 use craft::menu::RibbonMenuRequest;
 use craft::review::ui::Avatar;
 use craft::theme::ControlSize;
-use craft::ui::buttons::Button;
+use craft::ui::buttons::{Button, IconButton};
 use craft::ui::choice::Switch;
 use craft::ui::contract::{Bind, BodyCx, Props as _, Show as _, ShowCollection as _, ShowContainer as _, TooltipSpec, Trigger};
 use craft::ui::display::{Divider, Text};
